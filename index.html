@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>Kasthöjd – utforska kaströrelse</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="physics.js" defer></script>
+  <script src="content.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <main class="page">
+    <header class="page-header">
+      <a class="brand" href="./" aria-label="Kasthöjd – startsida">
+        <span class="brand-mark" aria-hidden="true">↗</span>
+        <span>Fysiklabbet <span class="brand-separator">/</span> Rörelse</span>
+      </a>
+      <span class="header-note">INTERAKTIV SIMULERING</span>
+    </header>
+
+    <section class="intro" aria-labelledby="page-title">
+      <p class="eyebrow" id="eyebrow"></p>
+      <h1 id="page-title"></h1>
+      <p class="intro-copy" id="intro-copy"></p>
+    </section>
+
+    <section class="simulator" aria-labelledby="simulator-title">
+      <div class="simulator-top">
+        <div>
+          <p class="section-kicker" id="simulator-kicker"></p>
+          <h2 id="simulator-title"></h2>
+        </div>
+        <span class="model-badge"><span aria-hidden="true"></span><span id="model-label"></span></span>
+      </div>
+
+      <div class="simulator-layout">
+        <div class="chart-column">
+          <div class="chart-heading">
+            <span id="chart-label"></span>
+            <span id="chart-units" class="chart-units"></span>
+          </div>
+          <div id="position-readout" class="position-readout">
+            <span id="time-position"></span>
+            <span id="x-position"></span>
+            <span id="y-position"></span>
+          </div>
+          <div class="chart">
+            <svg id="scene" viewBox="0 0 800 340" role="img" aria-labelledby="chart-title chart-description">
+              <title id="chart-title"></title>
+              <desc id="chart-description"></desc>
+              <g id="grid-lines" class="grid" aria-hidden="true"></g>
+              <g id="axis-ticks" class="ticks" aria-hidden="true"></g>
+              <line id="y-axis" class="axis" x1="82" y1="54" x2="82" y2="290"></line>
+              <line id="x-axis" class="axis" x1="82" y1="290" x2="742" y2="290"></line>
+              <line id="landing-marker" class="landing-marker" x1="742" y1="290" x2="742" y2="290"></line>
+              <path id="trajectory" class="trajectory"></path>
+              <g id="saved-trajectories" aria-label="Sparade kast"></g>
+              <text id="x-axis-label" class="axis-label" x="765" y="286">x</text>
+              <text id="y-axis-label" class="axis-label" x="68" y="48">y</text>
+              <circle id="ball" class="ball" cx="82" cy="290" r="9"></circle>
+              <circle id="launch-dot" class="launch-dot" cx="82" cy="290" r="3"></circle>
+            </svg>
+          </div>
+          <div id="throw-legend" class="throw-legend" aria-label="Sparade kast"></div>
+        </div>
+
+        <aside class="control-panel" aria-labelledby="controls-title">
+          <div class="panel-heading">
+            <p class="section-kicker" id="controls-title"></p>
+            <p class="panel-hint" id="controls-hint"></p>
+          </div>
+          <div class="controls">
+            <div class="control">
+              <div class="control-heading">
+                <label for="speed" id="speed-label"></label>
+                <output id="speed-value" for="speed"></output>
+              </div>
+              <input id="speed" type="range">
+              <div class="range-ends"><span id="speed-min"></span><span id="speed-max"></span></div>
+            </div>
+            <div class="control">
+              <div class="control-heading">
+                <label for="angle" id="angle-label"></label>
+                <output id="angle-value" for="angle"></output>
+              </div>
+              <input id="angle" type="range">
+              <div class="range-ends"><span id="angle-min"></span><span id="angle-max"></span></div>
+            </div>
+          </div>
+
+          <div class="results" aria-live="polite">
+            <article class="result">
+              <span class="result-icon time-icon" aria-hidden="true">◷</span>
+              <span class="result-label" id="time-label"></span>
+              <strong id="time-result"></strong>
+            </article>
+            <article class="result">
+              <span class="result-icon height-icon" aria-hidden="true">↕</span>
+              <span class="result-label" id="height-label"></span>
+              <strong id="height-result"></strong>
+            </article>
+            <article class="result">
+              <span class="result-icon range-icon" aria-hidden="true">↔</span>
+              <span class="result-label" id="range-result-label"></span>
+              <strong id="range-result"></strong>
+            </article>
+          </div>
+
+          <div class="simulator-bottom">
+            <button id="play-button" class="play-button" type="button">
+              <span id="play-icon" aria-hidden="true">▶</span>
+              <span id="play-label"></span>
+            </button>
+            <div class="throw-actions">
+              <button id="save-throw-button" class="save-throw-button" type="button"></button>
+              <button id="clear-throws-button" class="clear-throws-button" type="button" disabled></button>
+            </div>
+            <p id="assumption-note"></p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="lesson" aria-labelledby="lesson-title">
+      <div class="lesson-heading">
+        <p class="section-kicker" id="lesson-kicker"></p>
+        <h2 id="lesson-title"></h2>
+        <p id="lesson-intro"></p>
+      </div>
+      <div class="lesson-grid">
+        <article class="lesson-card">
+          <span class="lesson-number">01</span>
+          <h3 id="horizontal-title"></h3>
+          <p id="horizontal-copy"></p>
+          <div class="equation" id="horizontal-equation"></div>
+        </article>
+        <article class="lesson-card">
+          <span class="lesson-number">02</span>
+          <h3 id="vertical-title"></h3>
+          <p id="vertical-copy"></p>
+          <div class="equation" id="vertical-equation"></div>
+        </article>
+        <article class="lesson-card">
+          <span class="lesson-number">03</span>
+          <h3 id="flight-title"></h3>
+          <p id="flight-copy"></p>
+          <div class="equation" id="flight-equation"></div>
+        </article>
+      </div>
+    </section>
+
+    <footer class="page-footer">
+      <span id="footer-copy"></span>
+      <span class="footer-mark">Kasthöjd <span aria-hidden="true">✳</span></span>
+    </footer>
+  </main>
+</body>
+</html>
